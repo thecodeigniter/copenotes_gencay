@@ -1,0 +1,116 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+
+ 
+
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto" style = "text-align: center;">
+      <div class="inner">
+        <h3 style="color:white;" >Admin Dashboard</h3>
+        <h5 style="color:white;" >Welcome {{ user.first_name }} {{ user.last_name }}</h5>
+        <br>
+        <nav class="nav nav-masthead justify-content-center">
+            <a style="color:white;"  class="nav-link"
+            href="{% url 'home' %}"><b>Home</b></a>
+
+          <a style="color:white;"  class="nav-link"
+          href="{% url 'user form' %}"><b>Register New Customer</b></a>
+
+          <a style="color:white;"  class="nav-link"
+          href="{% url 'message form' %}"><b>Add New Message</b></a>
+
+          <a style="color:white;"  class="nav-link"
+          href="/api/user"><b>Add Customer through API</b></a>
+
+          <a style="color:white;"  class="nav-link"
+          href="/api/message"><b>Add Message through API</b></a>
+
+           <a style="color:white;" class="nav-link"
+           href="{% url 'logout' %}"><b>Log Out</b></a>
+          <!-- <a class="nav-link" href="{{comapny_website}}">Create Jobs</a> -->
+        </nav>
+
+        {% if users.count == 0 %}
+        <h5  style="color:white;text-align:left;" > User list is empty right now</h5>
+        {% else %}
+        <h5  style="color:white;text-align:left;" > List of Added Users</h5>
+       
+       
+            <table class="table table-striped table-dark table-bordered table-sm table-responsive-md">
+                <thead>
+                
+                <tr>
+                    <th scope="col">Sr No.</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Remove User</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for person in users %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{person.first_name}}</td>
+                    <td>{{person.last_name }}</td>
+                    <td>{{person.email}}</td>
+                    <td scope="col"><a  href = "{{user_delete_url}}{{person.id}}">
+                        <button type="button" 
+                    
+                        class="btn btn-danger">Click Here</button></a></td> 
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        
+        
+        {% if messages.count == 0 %}
+            <h5  style="color:white;text-align:left;" > Message list is empty right now</h5>
+        {% else %}
+            <h5  style="color:white;text-align:left;" > List of Added Messages</h5>
+            <table class="table table-striped table-dark table-bordered table-sm table-responsive-md">
+                <thead>
+                
+                <tr>
+                    <th scope="col">Sr No.</th>
+                    <th scope="col">Message</th>  
+                    <th scope="col">Remove Message</th>  
+                    
+                </tr>
+                </thead>
+                <tbody>
+                {% for message in messages %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{message.text}}</td>
+                    
+                    <td scope="col"><a  href = "{{message_delete_url}}{{message.id}}">
+                        <button type="button" 
+                    
+                        class="btn btn-danger">Click Here</button></a></td> 
+                
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+      </div>
+    </header>
+   
+</div>
+
+
+
+
+{% else %}
+<meta http-equiv="refresh" content="0; URL={% url 'login' %}" />
+{% endif %}
+{% endblock %}

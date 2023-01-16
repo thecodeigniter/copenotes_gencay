@@ -1,0 +1,17 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<form id = "prospects_form" method="post" style="text-align: center;">
+  <h4 style="text-align: center;"> Log In to Copenotes Email Bot Service </h4>
+  <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type = "submit" class="btn btn-primary btn-block" >Log In</button>
+</form>
+
+{% endblock %}

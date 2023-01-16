@@ -1,0 +1,61 @@
+<!-- templates/registration/user.html -->
+{% extends 'base.html' %}
+
+
+{% block title %}{{form_header}}{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+
+
+
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto" style = "text-align: center;">
+      <div class="inner">
+        <h3 style="color:white;" >Admin Dashboard</h3>
+        <h5 style="color:white;" >Welcome {{ user.first_name }} {{ user.last_name }}</h5>
+        <br>
+        <nav class="nav nav-masthead justify-content-center">
+            <a style="color:white;"  class="nav-link"
+            href="{% url 'home' %}"><b>Home</b></a>
+
+          <a style="color:white;"  class="nav-link"
+          href="{% url 'user form' %}"><b>Register New Customer</b></a>
+
+          <a style="color:white;"  class="nav-link"
+          href="{% url 'message form' %}"><b>Add New Message</b></a>
+
+           <a style="color:white;" class="nav-link"
+           href="{% url 'logout' %}"><b>Log Out</b></a>
+          <!-- <a class="nav-link" href="{{comapny_website}}">Create Jobs</a> -->
+        </nav>
+      </div>
+    </header>
+
+
+        <form method="post" style="{{custom_style}}">
+          
+          <h4 style="text-align: center;">{{form_text}} </h4>
+          <h6> {{success_message}}</h6>
+        
+          {% csrf_token %}
+          {{form_creation}}
+          <button type = "submit" class="btn btn-primary btn-block" >Add</button>
+        </form>
+</div>
+
+<script>
+    const element = document.querySelector('.template-form').classList;
+    console.log(element);
+</script>
+
+
+
+
+
+{% else %}
+<meta http-equiv="refresh" content="0; URL={% url 'login' %}" />
+{% endif %}
+
+
+
+{% endblock %}
